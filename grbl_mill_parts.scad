@@ -108,10 +108,9 @@ module x_slide () {
             // Halter für TR8 Mutter
             union () {
 
-                if ( shorter_x_slide ) slide_frame ( x_slide_inner_width, x_slide_length, x_slide_length_cut );
-                else slide_frame ( x_slide_inner_width, x_slide_length, 0 );
+                slide_frame ( x_slide_inner_width, x_slide_length, shorter_x_slide ? x_slide_length_cut : 0 );
                 
-                translate ( [0, 0, x_slide_length_cut/2] ) {
+                translate ( [0, 0, shorter_x_slide ? x_slide_length_cut/2 : 0] ) {
                     hull () {
                         cylinder ( d = nut_holder_outer_diameter, h = TR8_nut [height] );
                         translate ( [TR8_nut [outer_diameter], -nut_holder_outer_diameter/2, 0] ) cube ( [1, nut_holder_outer_diameter, TR8_nut [height]] );
@@ -120,7 +119,7 @@ module x_slide () {
 
             }
 
-            translate ( [0, 0, x_slide_length_cut/2] ) {
+            translate ( [0, 0, shorter_x_slide ? x_slide_length_cut/2 : 0] ) {
 
                 // TR8
                 translate ( fudge_dim ) cylinder ( d = TR8_nut [outer_diameter], h = TR8_nut [height] +2*fudge ); 
