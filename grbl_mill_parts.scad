@@ -80,16 +80,14 @@ module x_motor_end ( with_t_plate = with_t_plate ) {
 
 }
 
-module x_motor_end_support () {
+module x_motor_end_extension () {
     
-    x_motor_end_support_height = 31.5;
-    x_motor_end_support_height = 38.5;
-    cutout_dim = [nema17_base_size +2*fudge, 0.55*nema17_base_size, x_motor_end_support_height -8 ];
+    cutout_dim = [nema17_base_size +2*fudge, 0.55*nema17_base_size, x_motor_end_extension_length -8 ];
 
     difference () {
-        nema17_mount_plate ( x_motor_end_support_height );
-        nema17_mount_holes ( x_motor_end_support_height, nema17_axes_cutout_radius + 3 );
-        //translate ( [-nema17_base_size/2 -fudge, 0, delta/2] ) cube ( [nema17_base_size +2*fudge, 10, x_motor_end_support_height - delta] );
+        nema17_mount_plate ( x_motor_end_extension_length );
+        nema17_mount_holes ( x_motor_end_extension_length, nema17_axes_cutout_radius + 3 );
+        //translate ( [-nema17_base_size/2 -fudge, 0, delta/2] ) cube ( [nema17_base_size +2*fudge, 10, x_motor_end_extension_length - delta] );
         for ( rot = [0, 90] ) {
             rotate ( [0, 0, rot] )
                 translate ( ([0, 0, cutout_dim[z]-fudge] -cutout_dim)/2  ) 
@@ -184,7 +182,7 @@ module y_end_support () {
  
  }
 
- module y_motor_support () {
+ module y_motor_end_support () {
  
 	difference () {
         union () {
@@ -340,7 +338,7 @@ module z_nut () {
 
 }
 
-module z_slide_top () {
+module z_end () {
 
     kinetik_profile_end_plate_k30 ( z_profile_count, false);
 

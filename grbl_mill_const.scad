@@ -106,6 +106,8 @@ nema17_axes_cutout_radius = 12;
 nema17_base_mounthole_pos = nema17_base_size/2 - 5.5;
 nema17_mounthole_pos_dim = [nema17_base_mounthole_pos, nema17_base_mounthole_pos, 0];
 
+x_motor_end_extension_length = 38.5;
+
 /**************************************************************************
  *
  * Screws

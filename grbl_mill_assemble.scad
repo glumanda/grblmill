@@ -37,7 +37,7 @@ module assemble_all ( dist = assemble_dist, with_profile = true ) {
         if ( with_profile ) {
             color ( "silver" ) kinetik_profile_k30 ( z_profile_count, z_fix_profile_length );
         }
-        color ( "yellow" ) translate ( [0, 0, z_fix_profile_length + dist] ) z_slide_top ();
+        color ( "yellow" ) translate ( [0, 0, z_fix_profile_length + dist] ) z_end ();
         color ( "black" ) translate ( [0, -profile_k30_base_size/2, z_fix_profile_length - z_movable_profile_length -20] ) z_nut ();
     }
     
@@ -70,7 +70,7 @@ module assemble_y ( dist = assemble_dist, with_profile = true, y_profile_length 
             }
             color ( "orange" ) rotate ( [0, 0, 90] ) y_slide ();
             translate ( [0, 0, y_profile_length + dist + part_height] ) {
-                color ( "green" ) rotate ( [0, 180, 0] ) y_motor_support ();
+                color ( "green" ) rotate ( [0, 180, 0] ) y_motor_end_support ();
             }
         }
     }
@@ -98,7 +98,7 @@ module assemble_x ( dist = assemble_dist, with_profile = true, x_profile_length 
             translate ( [0, 0, x_profile_length + dist] ) {
                 color ( "green" ) translate ( [0, 0, part_height] ) rotate ( [180, 0, 0] ) x_motor_end ();
                 translate ( [0, 0, part_height + dist] ) {
-                    color ( "orange" ) x_motor_end_support ();
+                    color ( "orange" ) x_motor_end_extension ();
                 }
             }
         }
