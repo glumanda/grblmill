@@ -4,7 +4,7 @@ I have derived this work from http://www.thingiverse.com/thing:44854
 
 You need the MCAD library https://github.com/SolidCode/MCAD
 
-#Usage
+##Usage
 
 * open grbl_mill_main.scad in openSCAD to view the assembled mill
   * you can select the viewed part in the main file by commenting out the appropriate line
@@ -13,7 +13,7 @@ You need the MCAD library https://github.com/SolidCode/MCAD
   * there are some more flags for configuring the mill
 * some tuning is done in directly done in grbl_mill_parts.scad
 
-#This design is
+##This design is
 
 * fully printable 
   * large parts are printed with 0.8 mm nozzle
@@ -29,7 +29,7 @@ You need the MCAD library https://github.com/SolidCode/MCAD
     * length is the same like for x: 260 mm
 * the T8 threaded rod and the TR8 nut i have sourced from http://www.metallbau-pietrzak.de (ebay)
 
-#Screws and Rods
+##Screws and Rods
 
 * to connect the end parts to the profiles i have used M6 self cutting screws
 * to fix the slider and the TR8 nut i used M3 screws
@@ -37,13 +37,13 @@ You need the MCAD library https://github.com/SolidCode/MCAD
 * the trapezoid rods are 300 mm (x), 250 mm (y) and 200 m (z) long
 * the motor coupler on all axes is http://www.thingiverse.com/thing:173335
 
-#CNC-Control-Unit and Spindle
+##CNC-Control-Unit and Spindle
 
 * Arduino Uno with Grbl V0.9g
 * GrblShield with DRV8825 driver chips
 * the spindle is from ebay (China) with a Driver Board, that can be connected to the Grbl-Board
 
-#Working Area
+##Working Area
 
 * xy: 107.5 mm x 84.m mm
 * z = about 40 - 50 mm, depedning from tool and using the t-nut profiles
