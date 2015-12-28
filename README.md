@@ -12,9 +12,9 @@
 * open grbl_mill_main.scad in openSCAD to view the assembled mill
   * you can select the viewed part in the main file by commenting out the appropriate line
 * in grbl_mill_const.scad you can adjust the main construction
-  * in the division Configuration you can configure the width (count) of profile for each direction separatly
+  * in the division Configuration you can configure the width (count) of profiles for each direction separatly
   * there are some more flags to configuring the mill
-* some tuning is done in directly done in grbl_mill_parts.scad
+* some tuning is done directly in grbl_mill_parts.scad
 * all things are downloadable
 
 ####Working Area
@@ -26,8 +26,8 @@
 ####Profiles
 * using alu profiles from http://www.kinetikmsystem.de
 * K30 for the basic construction
-  * you can use for all direction a width of 3 basic profiles (like in the original design)
-  * but i had some souring restrictions so i am used on y 4 basic profile widh and for the other two 2 profiles
+  * you can use for all directions a width of 3 basic profiles (like in the original design)
+  * but i had some souring restrictions so i am used on y 4 basic profile widh and for the other two profiles
   * length for z: 200 mm (movable) and 300 mm (fix)
   * length for x and y: 260 mm
 * K20 for the t-nut plate
@@ -45,6 +45,6 @@
 
 ####CNC-Control-Unit and Spindle
 
-* Arduino Uno with Grbl V0.9g https://github.com/grbl/grbl
+* Arduino Uno with Grbl V0.9j https://github.com/grbl/grbl
 * GrblShield with DRV8825 driver chips
 * the spindle is from ebay (China) with a Driver Board, that can be connected to the Grbl-Board
