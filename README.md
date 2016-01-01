@@ -27,7 +27,7 @@
 * using alu profiles from http://www.kinetikmsystem.de
 * K30 for the basic construction
   * you can use for all directions a width of 3 basic profiles (like in the original design)
-  * but i had some souring restrictions so i am used on y 4 basic profile widh and for the other two profiles
+  * but i had some sourcing restrictions so i am used on y 4 basic profile width and for the other two profiles
   * length for z: 200 mm (movable) and 300 mm (fix)
   * length for x and y: 260 mm
 * K20 for the t-nut plate
