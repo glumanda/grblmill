@@ -42,6 +42,9 @@ t_plate_profile_count = 5;
 
 shorter_x_slide = false;
 
+z_nut_base_reduction = 15;
+//z_nut_base_reduction = 0;
+
 assemble_show_axes = false; // on for checking alignment
  
 /**************************************************************************
@@ -204,6 +207,18 @@ z_side_slide_notch_x_pos = [-35.5 -2, +29.5];
 
 inner_slider_short_len = 28;
 inner_slider_hole_distance = 12;
+
+z_nut_base_plate_dim = [profile_k30_end_dim [z_profile_count][x], 1.5*profile_k30_base_size, part_height/2];
+z_nut_y_pos = -22.5;
+z_nut_shell_base_width = TR8_nut [outer_diameter] + 10;
+z_nut_fixing_screw_base_width = 10;
+
+TR8_nut_shell_base_height = 2;
+TR8_nut_shell_height = TR8_nut [height] + TR8_nut_shell_base_height;
+TR8_nut_axes_cutout_diameter = 14;
+TR8_nut_shell_width = 2;
+
+support_cylinder_diameter = 1;
 
 /**************************************************************************
  *

@@ -273,61 +273,81 @@ module z_motor_end () {
 
 module z_nut () {
 
-    plate_dim = [profile_k30_end_dim [z_profile_count][x], 1.5*profile_k30_base_size, part_height/2];
-
-    hh = 2;
-    h = TR8_nut [height] + hh;
-    y_nut = -22.5;
-    z_nut = 0;
-    
-    TR8_extra = 5;
-    
-    l_M3 = TR8_nut [outer_diameter] + TR8_extra + 5; // 5 für die Auswölbung
-    h_M3_nut = 2.1;
+    length_fixing_screw_hole = z_nut_shell_base_width + support_cylinder_diameter;
     
     difference () {
     
-        union () {
-            translate ( [0, -plate_dim [z]/2, plate_dim[y]/2] ) rotate ( [90, 0, 0] ) roundedBox ( plate_dim, corner_radius, sidesonly );
-            translate ( [0, 0, z_nut] ) 
-                hull () {
-                    // "Schale" um TR8 Mutter
-                    translate ( [0, y_nut, 0] ) cylinder ( d = TR8_nut [outer_diameter] + TR8_extra, h = h );
-                    for ( dx = [-1, +1] ) {
-                        translate ( [dx*10, -1, 0] ) cylinder ( d = 1, h = h );
-                        for ( dy = [-1, +1] ) {
-                            translate ( [dx*(TR8_nut [outer_diameter] + TR8_extra)/2, y_nut + dy*9.5/2, 0] ) cylinder ( d = 1, h = h );
-                        }
+    union () {
+
+        // base plate
+        translate ( [0, -z_nut_base_plate_dim [z]/2, z_nut_base_plate_dim[y]/2] ) 
+            rotate ( [90, 0, 0] ) 
+                roundedBox ( z_nut_base_plate_dim - [z_nut_base_reduction, 0, 0], corner_radius, sidesonly );
+
+        // shell around nut
+        hull () {
+
+            // shell base
+            translate ( [0, z_nut_y_pos, 0] ) 
+                cylinder ( d = TR8_nut [outer_diameter] + 2*TR8_nut_shell_width, h = TR8_nut_shell_height );
+            
+            // fixing screw
+            for ( dx = [-1, +1] ) {
+                translate ( [dx*z_nut_shell_base_width/2, 0, 0] ) {
+                    for ( y = [-support_cylinder_diameter, z_nut_y_pos - z_nut_fixing_screw_base_width/2] ) {
+                        translate ( [0, y, 0] )
+                            cylinder ( d = support_cylinder_diameter, h = TR8_nut_shell_height );
                     }
                 }
-            // notch
-            for ( dx = [-1, +1] ) {
-                //translate ( [dx*profile_k30_base_size/2 - kinetik_width_k30/2, kinetik_depth_k30, 0] )
-                translate ( [dx * ( plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_width_k30/2, kinetik_depth_k30, 0] )
-                    rotate ( [90, 0, 0] ) 
-                        cube ( [kinetik_width_k30, plate_dim [y], kinetik_depth_k30] );
+                *for ( dy = [-1, +1] ) {
+                    translate ( [dx*(TR8_nut [outer_diameter]/2 + TR8_nut_shell_width), z_nut_y_pos + dy*z_nut_fixing_screw_base_width/2, 0] ) 
+                        cylinder ( d = support_cylinder_diameter, h = TR8_nut_shell_height  );
+                }
             }
-            
-        }
-        
-        // seitl. Schrauben für M3 Befestigung
-        translate ( [0, y_nut, h/2] ) {
-            // Loch für Schraube
-            translate ( [-l_M3/2 -fudge, 0, 0] ) rotate ( [0, 90, 0] ) cylinder ( r = M3_radius, h = l_M3 +2*fudge );
-            // Durchmesser für eine Mutter ist Abstand der "Flächen" dividiert durch sin(60)
-            translate ( [-TR8_nut [outer_diameter]/2 -h_M3_nut, 0, 0] ) rotate ( [0, 90, 0] ) cylinder ( d = M3_nut_diameter, h = TR8_nut [outer_diameter] +2*h_M3_nut, $fn = 6 );
         }
 
-        // Loch/Ausschnitt für TR8 Mutter
-        translate ( [0, y_nut, hh] ) cylinder ( d = TR8_nut [outer_diameter], h = plate_dim [y] +2*fudge );
-        // Loch/Auschnitt für Achse
-        translate ( [0, y_nut, -fudge] ) cylinder ( d = 14, h = plate_dim [y] +2*fudge );
+        // notch
+        for ( dx = [-1, +1] ) {
+            //translate ( [dx*profile_k30_base_size/2 - kinetik_width_k30/2, kinetik_depth_k30, 0] )
+            translate ( [dx * ( z_nut_base_plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_width_k30/2, kinetik_depth_k30, 0] )
+                rotate ( [90, 0, 0] ) 
+                    cube ( [kinetik_width_k30, z_nut_base_plate_dim [y], kinetik_depth_k30] );
+        }
+
+    }
+        
+        // sidly screw for fixing the nut
+        translate ( [0, z_nut_y_pos, 0] ) {
+
+            translate ( [0, 0, TR8_nut_shell_height/2] ) {
+        
+                // hole for screws
+                translate ( [-length_fixing_screw_hole/2 -fudge, 0, 0] ) 
+                    rotate ( [0, 90, 0] ) 
+                        cylinder ( r = M3_radius, h = length_fixing_screw_hole +2*fudge );
+                        
+                // indention for nuts
+                translate ( [-TR8_nut [outer_diameter]/2 -M3_nut_height, 0, 0] ) 
+                    rotate ( [0, 90, 0] ) 
+                        cylinder ( d = M3_nut_diameter, h = TR8_nut [outer_diameter] +2*M3_nut_height, $fn = 6 );
+            }
+
+        
+            // Loch/Ausschnitt für TR8 Mutter
+            translate ( [0, 0, TR8_nut_shell_base_height] ) 
+                cylinder ( d = TR8_nut [outer_diameter], h = z_nut_base_plate_dim [y] +2*fudge );
+            
+            // Loch/Auschnitt für Achse
+            translate ( fudge_dim ) 
+                cylinder ( d = TR8_nut_axes_cutout_diameter, h = z_nut_base_plate_dim [y] +2*fudge );
+                
+        }
         
         // Schraublöcher für Profilbefestigung
         for ( i = [-1, +1] ) {
 //            for ( j = [0.25, 0.75] ) {
             for ( j = [0.75] ) {
-                translate ( [i * ( plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_depth_k30 +fudge, j*plate_dim[y]] )
+                translate ( [i * ( z_nut_base_plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_depth_k30 +fudge, j*z_nut_base_plate_dim[y]] )
                     rotate ( [90, 0, 0] ) 
                         cylinder ( r = M4_radius, h = 10 );
             }
