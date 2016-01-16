@@ -42,7 +42,7 @@ module roundedBox2 ( dim, corner_radius, sidesonly ) {
 
 module kinetik_slot_k20 ( l = 100 ) {
 
-    translate ( [-kinetik_width_k30/2, -kinetik_depth_k30/2, 0] ) cube ( [kinetik_width_k20, kinetik_depth_k20, l] );
+    translate ( [-kinetik_k20_notch_width/2, -kinetik_k20_notch_depth/2, 0] ) cube ( [kinetik_k20_notch_width, kinetik_k20_notch_depth, l] );
     
 }
 
@@ -55,7 +55,7 @@ module kinetik_profile_k20 ( count = 2, l = 100 ) {
             translate ( [i*dim[x], 0, 0] ) {
                 difference () {
                     roundedBox2 ( dim, corner_radius, sidesonly );
-                    translate ( [0, +dim[y]/2 - kinetik_depth_k20/2 +fudge, -fudge] )kinetik_slot_k20 ( l +2*fudge );
+                    translate ( [0, +dim[y]/2 - kinetik_k20_notch_depth/2 +fudge, -fudge] )kinetik_slot_k20 ( l +2*fudge );
                     for ( dx = [-1, +1] ) {
                         translate ( [dx*13/2, -1.5, -fudge] ) cylinder ( d = 3.3, h = l +2*fudge );
                     }
@@ -103,7 +103,7 @@ module kinetik_profile_end_plate_k20 ( count = 1 ) {
 module kinetik_slot_k30 ( l = 100 ) {
 
     color ( "lime" )
-    translate ( [-kinetik_width_k30/2, -kinetik_depth_k30/2, 0] ) cube ( [kinetik_width_k30, kinetik_depth_k30, l] );
+    translate ( [-kinetik_k30_notch_width/2, -kinetik_k30_notch_depth/2, 0] ) cube ( [kinetik_k30_notch_width, kinetik_k30_notch_depth, l] );
     
 }
 
@@ -116,7 +116,7 @@ module kinetik_profile_k30 ( count = 2, l = 100 ) {
         color ( "blue" ) roundedBox2 ( dim, corner_radius, sidesonly );
         
         for ( dx = [-1, +1] ) {
-            translate ( [dx*(dim[x]/2-kinetik_depth_k30/2+fudge/10), 0, -fudge] ) rotate ( [0, 0, 90] ) kinetik_slot_k30 ( l +2*fudge );
+            translate ( [dx*(dim[x]/2-kinetik_k30_notch_depth/2+fudge/10), 0, -fudge] ) rotate ( [0, 0, 90] ) kinetik_slot_k30 ( l +2*fudge );
         }
         
         for ( i = [0 : (count/2-(1-count%2))] ) {
@@ -124,7 +124,7 @@ module kinetik_profile_k30 ( count = 2, l = 100 ) {
                 translate ( [dx*(i+0.5*(1-count%2))*profile_k30_base_size, 0, 0] ) {
                     translate ( [0, 0, -fudge] ) cylinder ( r = M6_radius, h = l +2*fudge );
                     for ( dy = [-1, +1] ) {
-                        translate ( [0, dy*(profile_k30_base_size/2-kinetik_depth_k30/2+fudge/10), -fudge] ) rotate ( [0, 0, 0] ) kinetik_slot_k30 ( l +2*fudge );
+                        translate ( [0, dy*(profile_k30_base_size/2-kinetik_k30_notch_depth/2+fudge/10), -fudge] ) rotate ( [0, 0, 0] ) kinetik_slot_k30 ( l +2*fudge );
                     }
                 }
             }
@@ -259,7 +259,7 @@ module slide_frame ( inner_width, length, length_cut = 0 ) {
                             );
                         }
                         // Nut
-                        translate ( [-kinetik_width_k30/2, 3 -fudge, 0] ) cube ( [kinetik_width_k30, kinetik_depth_k30, length - length_cut] );
+                        translate ( [-kinetik_k30_notch_width/2, 3 -fudge, 0] ) cube ( [kinetik_k30_notch_width, kinetik_k30_notch_depth, length - length_cut] );
                     }
             }
             

@@ -91,11 +91,11 @@ profile_end_plate_hole_pos = [profile_k30_base_size/2, profile_k30_base_size/2, 
 
 profile_k20_end_dim = [20, 10, part_height];
 
-kinetik_width_k30 = 6.25; // Breite der Nut TODO eigentlich 6.2 nach den Zeichnungen
-kinetik_depth_k30 = 3; // Höhe der Nut
+kinetik_k30_notch_width = 6.40; // TODO according to the drawing this is 6.2 mm
+kinetik_k30_notch_depth = 2.85;
 
-kinetik_width_k20 = 5.05; // Breite der Nut TODO eigentlich 6.2 nach den Zeichnungen
-kinetik_depth_k20 = 3; // Höhe der Nut
+kinetik_k20_notch_width = 5.05;
+kinetik_k20_notch_depth = 3;
 
 /**************************************************************************
  *
@@ -172,6 +172,27 @@ bearing688_end_plate_pos = -35;
 corner_radius = 2;
 sidesonly = true;
 
+z_nut_base_dim = [26, 31, 12]; // x, y, z
+
+z_side_slide_dim = [95, 100, 5.7]; // x, y, z
+z_side_slide_notch_x_pos = [-35.5 -2, +29.5];
+
+inner_slider_short_len = 28;
+inner_slider_hole_distance = 12;
+
+z_nut_base_plate_dim = [profile_k30_end_dim [z_profile_count][x], 1.5*profile_k30_base_size, part_height/2];
+z_nut_y_pos = -22.5;
+z_nut_shell_base_width = TR8_nut [outer_diameter] + 10;
+z_nut_fixing_screw_base_width = 10;
+
+TR8_nut_shell_base_height = 2;
+TR8_nut_shell_height = TR8_nut [height] + TR8_nut_shell_base_height;
+TR8_nut_axes_cutout_diameter = 14;
+TR8_nut_shell_width = 2;
+// TR8_nut_shell_width = 2.3; // this is better for my slicer
+
+support_cylinder_diameter = 1;
+
 /**************************************************************************
  *
  * Slides
@@ -199,26 +220,6 @@ slide_inner_width_extra = 7;
 // outer dimension of a slider
 // slide_inner_dim [y] + 2*slide_board_depth => 108.5 bei 30x90 Profilen
 //          96.5               + 2*      6                  = 108.5
-
-z_nut_base_dim = [26, 31, 12]; // x, y, z
-
-z_side_slide_dim = [95, 100, 5.7]; // x, y, z
-z_side_slide_notch_x_pos = [-35.5 -2, +29.5];
-
-inner_slider_short_len = 28;
-inner_slider_hole_distance = 12;
-
-z_nut_base_plate_dim = [profile_k30_end_dim [z_profile_count][x], 1.5*profile_k30_base_size, part_height/2];
-z_nut_y_pos = -22.5;
-z_nut_shell_base_width = TR8_nut [outer_diameter] + 10;
-z_nut_fixing_screw_base_width = 10;
-
-TR8_nut_shell_base_height = 2;
-TR8_nut_shell_height = TR8_nut [height] + TR8_nut_shell_base_height;
-TR8_nut_axes_cutout_diameter = 14;
-TR8_nut_shell_width = 2;
-
-support_cylinder_diameter = 1;
 
 /**************************************************************************
  *

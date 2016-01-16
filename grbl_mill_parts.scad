@@ -308,10 +308,10 @@ module z_nut () {
 
         // notch
         for ( dx = [-1, +1] ) {
-            //translate ( [dx*profile_k30_base_size/2 - kinetik_width_k30/2, kinetik_depth_k30, 0] )
-            translate ( [dx * ( z_nut_base_plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_width_k30/2, kinetik_depth_k30, 0] )
+            //translate ( [dx*profile_k30_base_size/2 - kinetik_k30_notch_width/2, kinetik_k30_notch_depth, 0] )
+            translate ( [dx * ( z_nut_base_plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_k30_notch_width/2, kinetik_k30_notch_depth, 0] )
                 rotate ( [90, 0, 0] ) 
-                    cube ( [kinetik_width_k30, z_nut_base_plate_dim [y], kinetik_depth_k30] );
+                    cube ( [kinetik_k30_notch_width, z_nut_base_plate_dim [y], kinetik_k30_notch_depth] );
         }
 
     }
@@ -347,7 +347,7 @@ module z_nut () {
         for ( i = [-1, +1] ) {
 //            for ( j = [0.25, 0.75] ) {
             for ( j = [0.75] ) {
-                translate ( [i * ( z_nut_base_plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_depth_k30 +fudge, j*z_nut_base_plate_dim[y]] )
+                translate ( [i * ( z_nut_base_plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_k30_notch_depth +fudge, j*z_nut_base_plate_dim[y]] )
                     rotate ( [90, 0, 0] ) 
                         cylinder ( r = M4_radius, h = 10 );
             }
@@ -374,14 +374,14 @@ module z_side_slide () {
             // notches
             translate ( [0, -z_side_slide_dim [y]/2, z_side_slide_dim[height]/2 -fudge] ) {
                 for ( x = z_side_slide_notch_x_pos ) {
-                    translate ( [x, 0, 0] ) cube ( [kinetik_width_k30, z_side_slide_dim [y], kinetik_depth_k30] );
+                    translate ( [x, 0, 0] ) cube ( [kinetik_k30_notch_width, z_side_slide_dim [y], kinetik_k30_notch_depth] );
                 }
             }
         }
         
         // holes for slider mount (M3)
         for ( z_side_slide_yy = [-36, +36] ) {
-            translate ( [z_side_slide_notch_x_pos [0] + kinetik_width_k30/2, z_side_slide_yy, -10] ) {
+            translate ( [z_side_slide_notch_x_pos [0] + kinetik_k30_notch_width/2, z_side_slide_yy, -10] ) {
                 for ( z_side_slide_y = [-inner_slider_hole_distance/2, +inner_slider_hole_distance/2] ) {
                     translate ( [0, z_side_slide_y, 0] ) cylinder ( r = M3_radius, h = 20 );
                 }
@@ -390,7 +390,7 @@ module z_side_slide () {
         
         // holes and cutouts for fixed mount (M6)
         for ( z_side_slide_yyy = [-35, 0, 35] ) {
-            translate ( [z_side_slide_notch_x_pos [1] + kinetik_width_k30/2, z_side_slide_yyy, 0] ) {
+            translate ( [z_side_slide_notch_x_pos [1] + kinetik_k30_notch_width/2, z_side_slide_yyy, 0] ) {
                 translate ( [0, 0, -10] ) cylinder ( r = M4_radius, h = 20 );
                 translate ( [0, 0, z_side_slide_dim [height]/2] ) cylinder ( r = M6_radius +3, h = 10 );
             }
@@ -566,7 +566,7 @@ module spindle_clamp ( part = 0, separation_plane = 0 ) {
         else if ( part == 1 ) {
             // main part
             translate ( [-spindle_clamp_box_length/2 -fudge, -part1_intersection_box_depth +fudge, 0] ) 
-                cube ( [spindle_clamp_box_length + 2*fudge, part1_intersection_box_depth + kinetik_depth_k30 +fudge, plate_dim [z]] );
+                cube ( [spindle_clamp_box_length + 2*fudge, part1_intersection_box_depth + kinetik_k30_notch_depth +fudge, plate_dim [z]] );
         }
         else if ( part == 2 ) {
             // clamp
@@ -580,9 +580,9 @@ module spindle_clamp ( part = 0, separation_plane = 0 ) {
             
                 // notch
                 for ( dx = [-1, +1] ) {
-                    //translate ( [dx*profile_k30_base_size/2 - kinetik_width_k30/2, kinetik_depth_k30, 0] )
-                    translate ( [dx * ( plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_width_k30/2, 0, 0] )
-                        cube ( [kinetik_width_k30, kinetik_depth_k30, plate_dim [z], ] );
+                    //translate ( [dx*profile_k30_base_size/2 - kinetik_k30_notch_width/2, kinetik_k30_notch_depth, 0] )
+                    translate ( [dx * ( plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_k30_notch_width/2, 0, 0] )
+                        cube ( [kinetik_k30_notch_width, kinetik_k30_notch_depth, plate_dim [z], ] );
                 }
 
                 hull () {
@@ -601,7 +601,7 @@ module spindle_clamp ( part = 0, separation_plane = 0 ) {
                         // Schraublöcher für Klemme
                         for ( i = [-1, +1] ) {
                             for ( j = [0.25, 0.75] ) {
-                                //translate ( [i * ( plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_depth_k30 +fudge, j*plate_dim[z]] )
+                                //translate ( [i * ( plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_k30_notch_depth +fudge, j*plate_dim[z]] )
                                 translate ( [
                                                 spindle_clamp_box_length/2 + 0.25*i*(spindle_clamp_box_length + spindle_diameter + extra_outer_diamter), 
                                                 spindle_clamp_box_width +fudge, 
@@ -631,7 +631,7 @@ module spindle_clamp ( part = 0, separation_plane = 0 ) {
             // Schraublöcher für Profilbefestigung
             for ( i = [-1, +1] ) {
                 for ( j = [0.25, 0.75] ) {
-                    translate ( [i * ( plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_depth_k30 +fudge, j*plate_dim[z]] )
+                    translate ( [i * ( plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_k30_notch_depth +fudge, j*plate_dim[z]] )
                         rotate ( [90, 0, 0] ) {
                             cylinder ( r = M6_radius - 0.5, h = 30 ); // HACK to avoiding support, needs to redrill
                             translate ( [0, 0, 8.2] ) cylinder ( r = M6_bolthead_radius, h = M6_bolthead_height + 7 );

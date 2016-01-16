@@ -21,7 +21,7 @@ module assemble_all ( dist = assemble_dist, with_profile = true ) {
  module assemble_z ( dist = assemble_dist, with_profile = true, z_movable_profile_length = z_side_slide_dim [y], z_fix_profile_length = z_side_slide_dim [y] ) {
  
     // movable profile with spindle clamp
-    translate ( [0, -z_side_slide_notch_x_pos [1] - kinetik_width_k30/2, z_fix_profile_length - z_movable_profile_length] ) {
+    translate ( [0, -z_side_slide_notch_x_pos [1] - kinetik_k30_notch_width/2, z_fix_profile_length - z_movable_profile_length] ) {
         if ( with_profile ) {
             color ( "silver" ) kinetik_profile_k30 ( z_profile_count, z_movable_profile_length );
         }
@@ -33,7 +33,7 @@ module assemble_all ( dist = assemble_dist, with_profile = true ) {
     }
     
     // fix profile
-    translate ( [0, -z_side_slide_notch_x_pos [0] - kinetik_width_k30/2, 0] ) {
+    translate ( [0, -z_side_slide_notch_x_pos [0] - kinetik_k30_notch_width/2, 0] ) {
         if ( with_profile ) {
             color ( "silver" ) kinetik_profile_k30 ( z_profile_count, z_fix_profile_length );
         }
