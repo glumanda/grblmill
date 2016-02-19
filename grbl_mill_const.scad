@@ -46,6 +46,8 @@ z_nut_base_reduction = 15;
 //z_nut_base_reduction = 0;
 
 assemble_show_axes = false; // on for checking alignment
+
+with_z_slder_notch_base = true;
  
 /**************************************************************************
  *
@@ -91,8 +93,10 @@ profile_end_plate_hole_pos = [profile_k30_base_size/2, profile_k30_base_size/2, 
 
 profile_k20_end_dim = [20, 10, part_height];
 
-kinetik_k30_notch_width = 6.40; // TODO according to the drawing this is 6.2 mm
+kinetik_k30_notch_width = 6.40 - 0.10; // according to the drawing this is 6.2 mm, but practical tests result in 6.3 mm
 kinetik_k30_notch_depth = 2.85;
+kinetik_k30_notch_base_width = 8.00;
+kinetik_k30_notch_base_depth = 2.90 - 2.10;
 
 kinetik_k20_notch_width = 5.05;
 kinetik_k20_notch_depth = 3;
