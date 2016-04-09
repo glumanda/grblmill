@@ -376,7 +376,7 @@ module z_side_slide () {
                 for ( x = z_side_slide_notch_x_pos ) {
                     translate ( [x, 0, 0] ) {
                         cube ( [kinetik_k30_notch_width, z_side_slide_dim [y], kinetik_k30_notch_depth] );
-                        if ( with_z_slder_notch_base ) {
+                        if ( with_z_slider_notch_base ) {
                             translate ( [(kinetik_k30_notch_width - kinetik_k30_notch_base_width)/2, 0, 0] ) 
                                 cube ( [kinetik_k30_notch_base_width, z_side_slide_dim [y], kinetik_k30_notch_base_depth] );
                         }

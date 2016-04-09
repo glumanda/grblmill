@@ -47,7 +47,7 @@ z_nut_base_reduction = 15;
 
 assemble_show_axes = false; // on for checking alignment
 
-with_z_slder_notch_base = true;
+with_z_slider_notch_base = true;
  
 /**************************************************************************
  *
@@ -122,7 +122,7 @@ x_motor_end_extension_length = 38.5;
  *
  **************************************************************************/
 
-M3_clearance = clearance;
+M3_clearance = 0;
 M3_diameter = 3;
 M3_radius = M3_diameter/2 + M3_clearance;
 M3_bolthead_radius = 3.25;
@@ -132,7 +132,7 @@ M3_nut_diameter = M3_wrench_size / sin ( 60 );
 M3_nut_radius = M3_nut_diameter/2;
 M3_nut_height = 2.3;
 
-M4_clearance = clearance;
+M4_clearance = 0;
 M4_diameter = 4;
 M4_radius = M4_diameter/2 + M4_clearance;
 M4_bolthead_diameter = 6.85;
@@ -143,7 +143,7 @@ M4_nut_diameter = M4_wrench_size / sin ( 60 );
 M4_nut_radius = M4_nut_diameter/2;
 //M4_nut_height = xx;
 
-M6_clearance = clearance;
+M6_clearance = 0;
 M6_diameter = 6;
 M6_radius = M6_diameter/2 + M6_clearance;
 M6_bolthead_diameter = 9.7;
