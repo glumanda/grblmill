@@ -124,7 +124,7 @@ x_motor_end_extension_length = 38.5;
 
 M3_clearance = 0;
 M3_diameter = 3;
-M3_radius = M3_diameter/2 + M3_clearance;
+M3_radius = M3_diameter/2;
 M3_bolthead_radius = 3.25;
 M3_bolthead_height = 3;
 M3_wrench_size = 5.5;
@@ -134,7 +134,7 @@ M3_nut_height = 2.3;
 
 M4_clearance = 0;
 M4_diameter = 4;
-M4_radius = M4_diameter/2 + M4_clearance;
+M4_radius = M4_diameter/2;
 M4_bolthead_diameter = 6.85;
 M4_bolthead_radius = M4_bolthead_diameter/2;
 M4_bolthead_height = 3.9;
@@ -145,7 +145,7 @@ M4_nut_radius = M4_nut_diameter/2;
 
 M6_clearance = 0;
 M6_diameter = 6;
-M6_radius = M6_diameter/2 + M6_clearance;
+M6_radius = M6_diameter/2;
 M6_bolthead_diameter = 9.7;
 M6_bolthead_radius = M6_bolthead_diameter/2;
 M6_bolthead_height = 6.0;
