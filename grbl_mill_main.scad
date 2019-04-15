@@ -49,6 +49,8 @@ assemble_all ();
 *z_side_slide ();
 *coupler ();
 
+*z_sliding_bottom_support ();
+
 *lineup ( 80 ) {
 
     spindle_clamp ( 2 ); // clamp

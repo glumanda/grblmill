@@ -357,6 +357,69 @@ module z_nut () {
 
 }
 
+module z_sliding_bottom_support () {
+
+	z_support_dim = [46, 32 + 11, 8];
+	
+	// width, height, deptch
+	base_plate_dim = [z_support_dim [0], z_nut_base_plate_dim [1]/2, z_support_dim [2]];
+
+    difference () {
+    
+		union () {
+
+			// base plate
+			translate ( [0, -base_plate_dim [z]/2, base_plate_dim[y]/2] ) 
+				rotate ( [90, 0, 0] ) 
+					roundedBox ( base_plate_dim, corner_radius, sidesonly );
+
+			// notch
+			for ( dx = [-1, +1] ) {
+				translate ( [dx * ( z_nut_base_plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_k30_notch_width/2, kinetik_k30_notch_depth, 0] )
+					rotate ( [90, 0, 0] ) 
+						cube ( [kinetik_k30_notch_width, base_plate_dim [y], kinetik_k30_notch_depth] );
+			}
+
+		}
+        
+        // Schraublöcher für Profilbefestigung
+        for ( i = [-1, +1] ) {
+            for ( j = [0.65] ) {
+                translate ( [i * ( z_nut_base_plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_k30_notch_depth +fudge, j*base_plate_dim[y]] )
+                    rotate ( [90, 0, 0] ) 
+                        cylinder ( r = M3_radius, h = base_plate_dim [2] + kinetik_k30_notch_depth +2*fudge );
+            }
+		}
+		
+    }
+
+	difference () {
+		// support for z-slider
+		translate ( [0, -z_support_dim [1]/2, z_support_dim [2]/2] ) {
+			//cube ( z_support_dim );
+			roundedBox ( z_support_dim, corner_radius, sidesonly );
+		}
+		
+        // screw holes
+        for ( d = [-1, +1] ) {
+			translate ( [d*33/2, -z_support_dim [1] + 10, 0] +fudge_dim ) {
+				cylinder ( r = M4_radius + 1, h = z_support_dim [2] +2*fudge );
+			}
+		}
+		translate ( [0, -z_support_dim [1], 0] +fudge_dim ) {
+			translate ( [0, 10, 0] ) {
+				cylinder ( d = 11, h = z_support_dim [2] +2*fudge );
+			}
+			translate ( [0, 26, 0] ) {
+				cylinder ( r = M4_radius + 1, h = z_support_dim [2] +2*fudge );
+			}
+		}
+		
+        
+	}
+
+}
+
 module z_end () {
 
     kinetik_profile_end_plate_k30 ( z_profile_count, false);
@@ -564,6 +627,8 @@ module spindle_clamp ( part = 0, separation_plane = 0 ) {
         color ( "blue" ) translate ( [-50, spindle_clamp_y - part_clearance, -fudge] ) cube ( [100, part_clearance, plate_dim [z] +2*fudge] );
     }
     
+	z_sliding_tool = false;
+			
     intersection () {
 
         if ( part == 0 ) {
@@ -585,11 +650,13 @@ module spindle_clamp ( part = 0, separation_plane = 0 ) {
             union () {
             
                 // notch
-                for ( dx = [-1, +1] ) {
-                    //translate ( [dx*profile_k30_base_size/2 - kinetik_k30_notch_width/2, kinetik_k30_notch_depth, 0] )
-                    translate ( [dx * ( plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_k30_notch_width/2, 0, 0] )
-                        cube ( [kinetik_k30_notch_width, kinetik_k30_notch_depth, plate_dim [z], ] );
-                }
+				if ( !z_sliding_tool ) {
+					for ( dx = [-1, +1] ) {
+						//translate ( [dx*profile_k30_base_size/2 - kinetik_k30_notch_width/2, kinetik_k30_notch_depth, 0] )
+						translate ( [dx * ( plate_dim[x]/2 - profile_k30_base_size/2 ) - kinetik_k30_notch_width/2, 0, 0] )
+							cube ( [kinetik_k30_notch_width, kinetik_k30_notch_depth, plate_dim [z], ] );
+					}
+				}
 
                 hull () {
                     translate ( [-plate_dim [x]/2, -plate_dim [y], 0] ) cube ( plate_dim );
@@ -634,17 +701,31 @@ module spindle_clamp ( part = 0, separation_plane = 0 ) {
             // Loch/Auschnitt für Achse
             translate ( [0, spindle_clamp_y, -fudge] ) cylinder ( d = spindle_diameter - 20, h = plate_dim [z] +2*fudge );
             
-            // Schraublöcher für Profilbefestigung
-            for ( i = [-1, +1] ) {
-                for ( j = [0.25, 0.75] ) {
-                    translate ( [i * ( plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_k30_notch_depth +fudge, j*plate_dim[z]] )
-                        rotate ( [90, 0, 0] ) {
-                            cylinder ( r = M6_radius - 0.5, h = 30 ); // HACK to avoiding support, needs to redrill
-                            translate ( [0, 0, 8.2] ) cylinder ( r = M6_bolthead_radius, h = M6_bolthead_height + 7 );
-                        }
-                }
-            }
-            
+			if ( z_sliding_tool ) {
+				// Schraublöcher für Profilbefestigung
+				f = 0.3;
+				for ( i = [-1, 0, +1] ) {
+					for ( j = [f, 1-f] ) {
+						translate ( [i * ( plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_k30_notch_depth +fudge, j*plate_dim[z]] )
+							rotate ( [90, 0, 0] ) {
+								cylinder ( r = M3_radius, h = 30 );
+								translate ( [0, 0, 8.2] ) cylinder ( r = M3_bolthead_radius, h = M3_bolthead_height + 10 );
+							}
+					}
+				}
+			}
+			else {
+				// Schraublöcher für Profilbefestigung
+				for ( i = [-1, +1] ) {
+					for ( j = [0.25, 0.75] ) {
+						translate ( [i * ( plate_dim[x]/2 - profile_k30_base_size/2 ), kinetik_k30_notch_depth +fudge, j*plate_dim[z]] )
+							rotate ( [90, 0, 0] ) {
+								cylinder ( r = M6_radius - 0.5, h = 30 ); // HACK to avoiding support, needs to redrill
+								translate ( [0, 0, 8.2] ) cylinder ( r = M6_bolthead_radius, h = M6_bolthead_height + 7 );
+							}
+					}
+				}
+			}
             
         }
     }
