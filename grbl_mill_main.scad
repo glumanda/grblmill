@@ -48,6 +48,8 @@ assemble_all ();
 *z_end ();
 *z_side_slide ();
 *coupler ();
+*spindle_board_holder ();
+*psoc_board_holder ();
 
 *z_sliding_bottom_support ();
 

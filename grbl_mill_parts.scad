@@ -511,7 +511,7 @@ module coupler_v2 () {
 
  module board_holder_screws ( y1 = 0, y2 = 0 ) {
 
-     h = 4;
+    h = 4;
     r_extra = 4;
     
     rr = M6_radius + r_extra;
@@ -583,6 +583,52 @@ module spindle_board_holder () {
     }
 
     board_holder_screws ( board_l/2+9, -(board_l/2+9) );
+    
+}
+
+module psoc_board_holder () {
+
+    board_l1 = 79.5;
+    board_l2 = 64.5;
+    border_w = 2*3;
+    corner_l = 12;
+
+    corner_d1 = board_l1/2 - corner_l/2 + border_w/2;
+    corner_d2 = board_l2/2 - corner_l/2 + border_w/2;
+	screw_offset = 4;
+    screw_d1 = board_l1/2 - screw_offset;
+    screw_d2 = board_l2/2 - screw_offset;
+    
+    bottom_h = 1.2;
+    nut_h = 2.5;
+    corner_h = nut_h + 2;
+    border_h = corner_h + 2;
+	
+    difference () {
+        union () {
+            difference () {
+                translate ( [0, 0, 0] ) cubedBox ( [board_l1 + border_w, board_l2 + border_w, border_h] );
+                translate ( [0, 0, bottom_h] ) cubedBox ( [board_l1, board_l2, border_h - bottom_h +fudge] );
+            }
+            union () {
+                for ( x = [-corner_d1, +corner_d1] ) {
+                    for ( y = [-corner_d2, +corner_d2] ) {
+                        translate ( [x, y, 0] ) roundedBox2 ( [corner_l, corner_l, corner_h], corner_radius, sidesonly );
+                    }
+                }
+            }
+        }
+        for ( x = [-screw_d1, +screw_d1] ) {
+            for ( y = [-screw_d2, +screw_d2] ) {
+                // Loch für Schraube
+                translate ( [x, y, -fudge] ) cylinder ( d = 2, h = border_h +2*fudge );
+                // Durchmesser für eine Mutter ist Abstand der "Flächen" dividiert durch sin(60)
+                translate ( [x, y, -fudge] ) cylinder ( d = 4 / sin ( 60 ), h = 2, $fn = 6 );
+            }
+        }
+    }
+
+    board_holder_screws ( board_l2/2+9, -(board_l2/2+9) );
     
 }
 
